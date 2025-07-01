@@ -15,19 +15,19 @@ class loginUser extends Controller
     }
     public function login(loginRequest $request)
     {
-
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->intended('/dashboard');
-        }
         
-        // if (Auth::attempt($request)) {
-        //     $request->session()->regenerate();
+        if (Auth::attempt($request->validated())) {
+            $request->session()->regenerate();
  
-        //     return redirect()->intended('dashboard');
-        // }
+            return redirect()->intended('dashboard');
+        }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect('login');
     }
 }
