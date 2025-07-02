@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\loginUser;
 use App\Http\Controllers\Auth\registerUser;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Faker\Guesser\Name;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +37,14 @@ Route::get('/profile', [dashboardController::class, 'edit'])->name('profile.edit
 Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index');
 
 Route::group(['prefix' => 'product'], function () {
+
         Route::get('/create',[ProductController::class,'create'])->name('create');
         Route::post('/create',[ProductController::class,'store'])->name('create.product');
 
         Route::get('/list',[ProductController::class,'index'])->name('product.list');
+        Route::get('/edit/{id}',[ProductController::class,'edit'])->name('product.edit');
+        Route::post('update/{id}',[ProductController::class,'update'])->name('product.update');
+        Route::get('/delete/{id}',[ProductController::class,'destroy'])->name('product.destroy');
+
+
 });

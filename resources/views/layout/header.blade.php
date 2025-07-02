@@ -91,7 +91,7 @@
                           <i class="bi bi-cart4 fs-5"></i>
                           <span class="ms-1">سبد خرید</span>
                       </a>
-                      <a href=# class="text-dark text-decoration-none">
+                      <a href={{ route('product.list') }} class="text-dark text-decoration-none">
                           <i class="bi bi-list fs-5"></i>
                           <span class="ms-1">لیست کالا ها</span>
                       </a>

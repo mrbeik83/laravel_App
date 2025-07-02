@@ -30,8 +30,8 @@
                             </p>
                         </div>
                         <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-primary">مشاهده</a>
-                            <a href="#" class="btn btn-sm btn-outline-secondary">ویرایش</a>
+                            <a href="{{ route('product.destroy',$product->id) }}" class="btn btn-sm btn-primary">حذف</a>
+                            <a href="{{ route('product.edit',$product->id) }}" class="btn btn-sm btn-outline-secondary">ویرایش</a>
                         </div>
                     </div>
                 </div>
