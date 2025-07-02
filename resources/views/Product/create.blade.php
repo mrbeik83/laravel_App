@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="{{ route('create.product') }}" method="POST" class="p-4 border rounded shadow-sm">
+<form action="{{ route('product.create') }}" method="POST" enctype="multipart/form-data" class="p-4 border rounded shadow-sm">
     @csrf
 
     <!-- نام محصول -->
@@ -39,6 +39,10 @@
     <div class="mb-3">
         <label for="size" class="form-label">سایز</label>
         <input type="text" class="form-control" id="size" name="size" placeholder="مثلاً: 140x140" required>
+    </div>
+    <div class="mb-3">
+        <label for="picture" class="form-label">عکس محصول</label>
+        <input type="file" class="form-control" id="picture" name="picture" accept="image/*" required>
     </div>
 
     <!-- دکمه ارسال -->

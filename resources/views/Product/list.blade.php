@@ -28,6 +28,7 @@
                             <p class="card-text">
                                 <strong>موجودی:</strong> {{ $product->number }} عدد
                             </p>
+                            <img src="{{ asset('storage/' . $product->picture) }}" width="150">
                         </div>
                         <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between">
                             <a href="{{ route('product.destroy',$product->id) }}" class="btn btn-sm btn-primary">حذف</a>

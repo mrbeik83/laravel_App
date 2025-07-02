@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="{{ route('product.update',$product->id) }}" method="POST" class="p-4 border rounded shadow-sm">
+<form action="{{ route('product.update',$product->id) }}" method="POST" enctype="multipart/form-data" class="p-4 border rounded shadow-sm">
     @csrf
 
     <!-- نام محصول -->
@@ -39,6 +39,15 @@
     <div class="mb-3">
         <label for="size" class="form-label">سایز</label>
         <input type="text" value="{{ $product->size }}" class="form-control" id="size" name="size" placeholder="مثلاً: 140x140" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="picture" class="form-label">عکس محصول</label>
+            <input type="file" name="picture" accept="image/*">
+
+            @if ($product->picture)
+                <img src="{{ asset('storage/' . $product->picture) }}" width="150">
+            @endif
     </div>
 
     <!-- دکمه ارسال -->

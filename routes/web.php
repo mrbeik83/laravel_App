@@ -39,7 +39,7 @@ Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index
 Route::group(['prefix' => 'product'], function () {
 
         Route::get('/create',[ProductController::class,'create'])->name('create');
-        Route::post('/create',[ProductController::class,'store'])->name('create.product');
+        Route::post('/create',[ProductController::class,'store'])->name('product.create');
 
         Route::get('/list',[ProductController::class,'index'])->name('product.list');
         Route::get('/edit/{id}',[ProductController::class,'edit'])->name('product.edit');

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -27,14 +29,16 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
+        $path = $request->file('picture')->store('products', 'public');
         Product::create([
-            'name' => $request->name,
-            'type' => $request->type,
+            'name'     => $request->name,
             'number' => $request->number,
-            'price' => $request->price,
-            'size' => $request->size,
+            'size'     => $request->size,
+            'price'    => $request->price,
+            'type'     => $request->type,
+            'picture'  => $path
         ]);
         return redirect()->route('product.list');
     }
@@ -62,13 +66,29 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $product->name = $request->name;
-        $product->type = $request->type;
-        $product->number = $request->number;
-        $product->price = $request->price;
-        $product->size = $request->size;
+        if ($request->hasFile('picture')) {
+            // حذف عکس قبلی (اگر وجود داشته باشه)
+            if ($product->picture && Storage::disk('public')->exists($product->picture)) {
+                Storage::disk('public')->delete($product->picture);
+            }
+    
+            // ذخیره عکس جدید
+            $path = $request->file('picture')->store('products', 'public');
+    
+            // آپدیت عکس جدید در مدل
+            $product->picture = $path;
+        }
 
-        $product->save();
+
+        $product->update([
+            'name'   => $request->name,
+            'type'   => $request->type,
+            'number' => $request->number,
+            'price'  => $request->price,
+            'size'   => $request->size,
+            'picture' => $product->picture, // فقط در صورتی که عکس جدید اومده باشه، مقدارش تغییر کرده
+        ]);
+        
 
 
         return redirect()->route('product.list');

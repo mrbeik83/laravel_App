@@ -95,6 +95,10 @@
                           <i class="bi bi-list fs-5"></i>
                           <span class="ms-1">لیست کالا ها</span>
                       </a>
+                      <a href={{ route('create') }} class="text-dark text-decoration-none">
+                          <i class="bi bi-plus fs-5"></i>
+                          <span class="ms-1">ثبت کالا</span>
+                      </a>
                   </div>
             @endauth
             <!-- اطلاعات کاربر در سمت چپ -->
