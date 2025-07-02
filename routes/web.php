@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\loginUser;
 use App\Http\Controllers\Auth\registerUser;
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\ProductController;
 use Faker\Guesser\Name;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +12,8 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::get('/', function () {
     return view('layout.master');
 });
+//لاگین و ریجستر داخل میدلور گست
+
 Route::middleware('guest')->group(function(){
     //اضافه کردن یوزر
     Route::get('/register',[registerUser::class,'show'])->name('register');
@@ -20,10 +23,21 @@ Route::middleware('guest')->group(function(){
     Route::post('/login',[loginUser::class,'login'])->name('login.submit');
 });
 
-Route::get('/dashboard',[dashboardController::class,'show'])->middleware('auth')->name('dashboard');
+//داشبورد و لاگ اوت داخل گروپ میدلور آث
+Route::middleware('auth')->group(function(){
+    Route::get('/dashboard',[dashboardController::class,'show'])->name('dashboard');
+    Route::post('/logout',[loginUser::class,'logout'])->name('logout');
+});
 
-Route::post('/logout',[loginUser::class,'logout'])->middleware('auth')->name('logout');
+Route::post('/logout',[loginUser::class,'logout'])->name('logout');
 
 Route::get('/cart', [dashboardController::class, 'index'])->name('cart.index');
 Route::get('/profile', [dashboardController::class, 'edit'])->name('profile.edit');
 Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index');
+
+Route::group(['prefix' => 'product'], function () {
+        Route::get('/create',[ProductController::class,'create'])->name('create');
+        Route::post('/create',[ProductController::class,'store'])->name('create.product');
+
+        Route::get('/list',[ProductController::class,'index'])->name('product.list');
+});
