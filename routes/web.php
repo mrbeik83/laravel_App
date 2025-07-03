@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\loginUser;
 use App\Http\Controllers\Auth\registerUser;
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use Faker\Guesser\Name;
@@ -22,6 +23,9 @@ Route::middleware('guest')->group(function(){
     //ورود
     Route::get('/login',[loginUser::class,'show'])->name('login');
     Route::post('/login',[loginUser::class,'login'])->name('login.submit');
+    //ورود با گوگل
+    Route::get('google/login',[GoogleController::class,'index'])->name('google.login');
+    Route::get('google/callback',[GoogleController::class,'callback']);
 });
 
 //داشبورد و لاگ اوت داخل گروپ میدلور آث

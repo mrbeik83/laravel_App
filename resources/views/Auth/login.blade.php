@@ -68,10 +68,13 @@
                                                 </label>
                                             </div>
 
-                                            <div class="d-grid gap-2">
+                                            <div class="a-grid gap-2">
                                                 <button type="submit" class="btn btn-login" style="border-color: #3a4a6d; color: #3a4a6d;">
                                                     <i class="bi bi-box-arrow-in-right"></i> ورود
                                                 </button>
+                                                <a href="{{ route('google.login') }}" class="btn btn-google" style="border-color: #3a4a6d; color: red;">
+                                                    <i class="bi bi-box-arrow-in-right"></i> ورود با گوگل
+                                                </a>
 
                                                 @if (Route::has('password.request'))
                                                     <a class="btn btn-link mt-2" href="{{ route('password.request') }}" style="color: #3a4a6d;">
