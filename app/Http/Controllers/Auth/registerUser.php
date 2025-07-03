@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\registerRequest;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class registerUser extends Controller
 {
@@ -17,11 +18,12 @@ class registerUser extends Controller
     }
     public function register(registerRequest $request)
     {
-        User::create([
+        $newUserRegister = User::create([
             ...$request->validated(),
             'password' => Hash::make($request->password)
         ]);
+        Auth::guard()->loginUsingId($newUserRegister->id);
 
-        return redirect(route('login'))->with('success', 'ثبت نام با موفقیت انجام شد! حالا می‌توانید وارد شوید.');
+        return redirect(route('dashboard'))->with('success', 'ثبت نام با موفقیت انجام شد! حالا می‌توانید وارد شوید.');
     }
 }
