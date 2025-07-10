@@ -6,6 +6,7 @@ use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
+use App\Models\User;
 use Faker\Guesser\Name;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
@@ -51,4 +52,9 @@ Route::group(['prefix' => 'product'], function () {
         Route::get('/delete/{id}',[ProductController::class,'destroy'])->name('product.destroy');
 
 
+});
+
+Route::get('/test',function(){
+    $user = User::find(1);
+    dd($user->orders->toArray());
 });
