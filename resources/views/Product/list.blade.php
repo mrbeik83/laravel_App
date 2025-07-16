@@ -33,6 +33,8 @@
                         <div class="card-footer bg-transparent border-top-0 d-flex justify-content-between">
                             <a href="{{ route('product.destroy',$product->id) }}" class="btn btn-sm btn-primary">حذف</a>
                             <a href="{{ route('product.edit',$product->id) }}" class="btn btn-sm btn-outline-secondary">ویرایش</a>
+                            <a href="{{ route('cart.add',$product->id) }}" class="btn btn-sm btn-outline-primary">افزودن به سبد خرید</a>
+                            
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\loginUser;
 use App\Http\Controllers\Auth\registerUser;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProductController;
@@ -33,11 +34,18 @@ Route::middleware('guest')->group(function(){
 Route::middleware('auth')->group(function(){
     Route::get('/dashboard',[dashboardController::class,'show'])->name('dashboard');
     Route::post('/logout',[loginUser::class,'logout'])->name('logout');
+    
+    //سبد خرید
+    Route::get('/cart/add/{products}',[CartController::class,'add'])->name('cart.add');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::get('/cart/increase/{id}', [CartController::class, 'increase'])->name('cart.increase');
+    Route::get('/cart/decrease/{id}', [CartController::class, 'decrease'])->name('cart.decrease');
+
 });
 
 Route::post('/logout',[loginUser::class,'logout'])->name('logout');
 
-Route::get('/cart', [dashboardController::class, 'index'])->name('cart.index');
 Route::get('/profile', [dashboardController::class, 'edit'])->name('profile.edit');
 Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index');
 
