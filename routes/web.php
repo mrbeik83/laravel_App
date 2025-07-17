@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::get('/cart/increase/{id}', [CartController::class, 'increase'])->name('cart.increase');
     Route::get('/cart/decrease/{id}', [CartController::class, 'decrease'])->name('cart.decrease');
+    Route::post('/cart/checkout',[CartController::class,'checkout'])->name('cart.checkout');
 
 });
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -55,5 +57,30 @@ class CartController extends Controller
         }
         session()->put('cart',$cart);
         return redirect()->route('cart.index');
+    }
+    public function checkout(){
+        $cart = session()->get('cart',[]);
+        if(!$cart || count($cart) == 0){
+            return redirect()->route('cart.index')->with('error','سبد خرید شما خالی است');
+        }
+
+        $order = Order::create([
+            'user_id' => auth()->id(),
+            'total_price' => collect($cart)->sum(fn($item)=>$item['price']*$item['quantity']),
+            'status' => 'درحال بررسی'
+        ]);
+
+        foreach($cart as $productId => $item){
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $productId,
+                'number' => $item['quantity'],
+                'price' => $item['price']
+            ]);
+        }
+
+        session()->forget('cart');
+
+        return redirect()->route('cart.index')->with('success','سفارش با موفقیت ثبت شد');
     }
 }
