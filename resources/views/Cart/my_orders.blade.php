@@ -26,7 +26,7 @@
                         <tbody>
                             @foreach($order->items as $item)
                                 <tr>
-                                    <td>{{ $item->products->name}}</td> 
+                                    <td>{{ $item->product->name}}</td> 
                                     <td>{{ $item->number }}</td>
                                     <td>{{ number_format($item->price) }} تومان</td>
                                     <td>{{ number_format($item->price * $item->number) }} تومان</td>

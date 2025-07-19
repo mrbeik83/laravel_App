@@ -84,7 +84,7 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success','سفارش با موفقیت ثبت شد');
     }
     public function myOrders(){
-        $orders = auth()->user()->orders()->with('items.products')->latest()->get();
+        $orders = auth()->user()->orders()->with('items.product')->latest()->get();
         
         return view('cart.my_orders',compact('orders'));
     }
