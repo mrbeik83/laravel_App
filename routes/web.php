@@ -43,6 +43,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/cart/decrease/{id}', [CartController::class, 'decrease'])->name('cart.decrease');
     Route::post('/cart/checkout',[CartController::class,'checkout'])->name('cart.checkout');
 
+    //سفارش های کاربر
+    Route::get('/my-orders',[CartController::class,'myOrders'])->name('orders.history');
+
 });
 
 Route::post('/logout',[loginUser::class,'logout'])->name('logout');
