@@ -15,7 +15,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()->isAdmin =! 1){
+        if($request->user()->isAdmin != 1){
             return redirect()->route('dashboard')->with('error','شما به این بخش دسترسی ندارید');
         }
         return $next($request);
