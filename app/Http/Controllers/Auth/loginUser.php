@@ -15,11 +15,16 @@ class loginUser extends Controller
     }
     public function login(loginRequest $request)
     {
-        
         if (Auth::attempt($request->validated())) {
             $request->session()->regenerate();
- 
+
+            $user = auth()->user();
+            if($user->isAdmin){
+                return redirect()->intended(route('dashboard.admin'));
+            }
+            else{
             return redirect()->intended('dashboard');
+            }
         }
 
         return back()->withErrors([
