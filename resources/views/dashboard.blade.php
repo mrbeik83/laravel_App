@@ -1,5 +1,5 @@
 @extends('layout.master')
-
+@section('title','dashbord')
 @section('content')
 <div class="row mb-4">
     <!-- کارت درآمد -->
