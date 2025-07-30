@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\loginUser;
 use App\Http\Controllers\Auth\registerUser;
 use App\Http\Controllers\CartController;
@@ -9,10 +10,13 @@ use App\Http\Controllers\ProductController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Faker\Guesser\Name;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
+
 
 Route::get('/', function () {
     return view('layout.master');
@@ -57,7 +61,7 @@ Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index
 
 //تست هرچیز جدیدی
 Route::get('/test', function () {
-    dd('salam');
+        return view('admin.dashboard');
 })->middleware('isAdmin');
 
 // نمایش محصولات 
@@ -65,8 +69,12 @@ Route::get('/test', function () {
 Route::get('/list', [ProductController::class, 'index'])->name('product.list');
 // روت های قسمت مخصوص ادمین سایت
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-    // کرود محصولات
-    Route::group(['prefix' => 'product'], function () {
+    // روت های مخصوص ادمین
+    Route::group(['prefix' => 'admin'],function(){
+        Route::get('/dashboard',[AdminController::class,'index'])->name('dashboard.admin');
+
+        // کرود محصولات
+        Route::group(['prefix' => 'product'], function () {
 
         Route::get('/create', [ProductController::class, 'create'])->name('create');
         Route::post('/create', [ProductController::class, 'store'])->name('product.create');
@@ -74,4 +82,6 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         Route::post('update/{id}', [ProductController::class, 'update'])->name('product.update');
         Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
     });
+    });
+
 });
