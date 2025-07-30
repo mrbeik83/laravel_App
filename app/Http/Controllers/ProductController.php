@@ -40,7 +40,7 @@ class ProductController extends Controller
             'type'     => $request->type,
             'picture'  => $path
         ]);
-        return redirect()->route('product.list');
+        return redirect()->route('dashboard.admin');
     }
 
     /**
@@ -91,7 +91,8 @@ class ProductController extends Controller
         
 
 
-        return redirect()->route('product.list');
+        return redirect()->route('dashboard.admin');
+
     }
 
     /**
@@ -101,6 +102,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->delete();
-        return redirect(route('product.list'));
+        return redirect()->route('dashboard.admin');
     }
 }
