@@ -6,6 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\JsonDecoder;
 
 class ProductController extends Controller
 {
@@ -32,12 +33,17 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $path = $request->file('picture')->store('products', 'public');
+        $colors = json_decode($request->colors);
         Product::create([
             'name'     => $request->name,
+            'product_code' => $request->product_code,
+            'colors' => $colors,
             'number' => $request->number,
             'size'     => $request->size,
             'price'    => $request->price,
             'type'     => $request->type,
+            'status' => $request->status,
+            'description' => $request->description,
             'picture'  => $path
         ]);
         return redirect()->route('dashboard.admin');
