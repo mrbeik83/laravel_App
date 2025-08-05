@@ -14,14 +14,16 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('product_code')->unique();
             $table->string('type');
             $table->unsignedInteger('number');
             $table->unsignedBigInteger('price');
             $table->string('size');
-            $table->string('likeNumbers')->nullable();
+            $table->string('like_numbers')->nullable();
             $table->string('color')->nullable();
-            $table->char('picture')->nullable();
-            $table->boolean('available')->default(true);
+            $table->string('picture')->nullable();
+            $table->text('description')->nullable();
+            $table->enum('status', ['موجود','ناموجود','به زودی'])->default('موجود');
             $table->timestamps();
         });
     }
