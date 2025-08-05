@@ -22,12 +22,29 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'     => 'required|string|max:255',
-            'number' => 'required|integer|min:1',
-            'size'     => 'required|string|max:50',
-            'price'    => 'required|numeric|min:0',
-            'type'     => 'required|string|max:100',
-            'picture'  => 'required|image|mimes:jpg,jpeg,png,gif,webp|max:4096',
+            'name' => 'required|string|max:255',
+            'type' => 'nullable|string|max:100',
+            'product_code' => 'required|string|max:100|unique:products,product_code',
+            'price' => 'required|numeric|min:0',
+            'number' => 'required|integer|min:0',
+            'size' => 'nullable|string|max:100',
+            'colorPicker' => 'nullable|string|max:20',
+            'colors' => 'nullable|json',
+            'status' => 'required|in:موجود,ناموجود,به زودی',
+            'description' => 'nullable|string',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'وارد کردن نام محصول الزامی است.',
+            'product_code.required' => 'کد محصول الزامی است.',
+            'product_code.unique' => 'کد محصول قبلاً استفاده شده است.',
+            'price.required' => 'قیمت را وارد کنید.',
+            'number.required' => 'موجودی انبار را وارد کنید.',
+            'status.in' => 'مقدار وضعیت باید یکی از: موجود، ناموجود یا به زودی باشد.',
+            'picture.image' => 'فایل انتخابی باید یک تصویر باشد.',
         ];
     }
 }
