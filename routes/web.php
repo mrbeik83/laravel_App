@@ -13,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Faker\Guesser\Name;
 use Illuminate\Container\Attributes\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -52,7 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-orders', [CartController::class, 'myOrders'])->name('orders.history');
 });
 
-Route::post('/logout', [loginUser::class, 'logout'])->name('logout');
+Route::get('/logout', [loginUser::class, 'logout'])->name('logout');
 
 Route::get('/profile', [dashboardController::class, 'edit'])->name('profile.edit');
 Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index');
@@ -61,8 +62,8 @@ Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index
 
 //تست هرچیز جدیدی
 Route::get('/test', function () {
-        return view('admin.dashboard');
-})->middleware('isAdmin');
+        dd(Product::findOrFail(1));
+})->middleware('isAdmin')->name('test');
 
 // نمایش محصولات 
 
