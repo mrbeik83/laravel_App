@@ -32,6 +32,7 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $request->validated();
         $path = $request->file('picture')->store('products', 'public');
         $colors = json_decode($request->colors);
         Product::create([
