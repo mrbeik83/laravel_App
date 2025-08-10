@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\loginUser;
 use App\Http\Controllers\Auth\registerUser;
+use App\Http\Controllers\Auth\VerificationCodeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\GoogleController;
@@ -18,10 +19,8 @@ use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
+Route::get('/', [dashboardController::class, 'show'])->name('dashboard');
 
-Route::get('/', function () {
-    return view('layout.master');
-});
 //لاگین و ریجستر داخل میدلور گست
 
 Route::middleware('guest')->group(function () {
@@ -34,11 +33,16 @@ Route::middleware('guest')->group(function () {
     //ورود با گوگل
     Route::get('google/login', [GoogleController::class, 'index'])->name('google.login');
     Route::get('google/callback', [GoogleController::class, 'callback']);
+    //ورود با sms 
+    Route::get('/loginSms',[VerificationCodeController::class,'showForm'])->name('login.sms');
+    Route::post('sendCode',[VerificationCodeController::class, 'sendCode'])->name('send.code');
+    Route::post('verifyCode',[VerificationCodeController::class, 'verifyCode'])->name('verify.code');
+    Route::get('resendVerifyCode',[VerificationCodeController::class, 'resendCode'])->name('resend.code');
 });
 
 //داشبورد و لاگ اوت داخل گروپ میدلور آث
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [dashboardController::class, 'show'])->name('dashboard');
+    
     Route::post('/logout', [loginUser::class, 'logout'])->name('logout');
 
     //سبد خرید
@@ -62,8 +66,8 @@ Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index
 
 //تست هرچیز جدیدی
 Route::get('/test', function () {
-        dd(Product::findOrFail(1));
-})->middleware('isAdmin')->name('test');
+    return view('auth.login-sms');
+})->name('test');
 
 // نمایش محصولات 
 
