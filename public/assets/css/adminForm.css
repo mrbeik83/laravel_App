@@ -293,6 +293,14 @@ body {
 }
 
 /* جدول */
+
+.color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
+    display: inline-block;
+}
 .admin-table {
     width: 100%;
     border-collapse: collapse;
@@ -862,4 +870,26 @@ body.menu-open::before {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-color);
+}
+
+/* استایل تایمر تخفیف */
+.discount-timer {
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: rgba(25, 135, 84, 0.1);
+    padding: 5px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* استایل کارت‌های جدید */
+.slider-section, .discount-section {
+    display: none;
+}
+
+.slider-section.active, .discount-section.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in-out;
 }

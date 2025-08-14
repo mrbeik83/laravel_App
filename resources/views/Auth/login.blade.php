@@ -1,100 +1,76 @@
-@extends('layout.master')
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ورود | یونیک اسکارف</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/css/Auth/login.css') }}">
+  <style>
+   
+  </style>
+</head>
+<body>
+  <!--  بارگذاری -->
+  <div id="preloader">
+    <div class="loader"></div>
+    <div class="loading-text">در حال بارگذاری...</div>
+  </div>
 
-@section('content')
-
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <!-- نمایش پیام موفقیت -->
-            @if(session('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
-            <div class="card shadow-sm">
-                <!-- بقیه کدهای فرم لاگین -->
-                <div class="container py-5">
-                        <div class="row justify-content-center">
-                            <div class="col-md-6">
-                                <div class="card shadow-sm">
-                                    <div class="card-header bg-white border-0">
-                                        <h3 class="text-center mb-0" style="color: #3a4a6d;">ورود به حساب کاربری</h3>
-                                    </div>
-
-                                    <div class="card-body">
-                                        <form method="POST" action="{{ route('login') }}">
-                                            @csrf
-
-                                            <div class="mb-3">
-                                                <label for="userName" class="form-label">یوزر نیم</label>
-                                                <input id="userName" type="userName" class="form-control @error('userName') is-invalid @enderror" 
-                                                    name="userName" value="{{ old('userName') }}" required autocomplete="userName" autofocus>
-                                                @error('userName')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                            
-
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label">آدرس ایمیل</label>
-                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" 
-                                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                                @error('email')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="password" class="form-label">رمز عبور</label>
-                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" 
-                                                    name="password" required autocomplete="current-password">
-                                                @error('password')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-
-                                            <div class="mb-3 form-check">
-                                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="remember">
-                                                    مرا به خاطر بسپار
-                                                </label>
-                                            </div>
-
-                                            <div class="a-grid gap-2">
-                                                <button type="submit" class="btn btn-login" style="border-color: #3a4a6d; color: #3a4a6d;">
-                                                    <i class="bi bi-box-arrow-in-right"></i> ورود
-                                                </button>
-                                                <a href="{{ route('google.login') }}" class="btn btn-google" style="border-color: #3a4a6d; color: red;">
-                                                    <i class="bi bi-box-arrow-in-right"></i> ورود با گوگل
-                                                </a>
-
-                                                @if (Route::has('password.request'))
-                                                    <a class="btn btn-link mt-2" href="{{ route('password.request') }}" style="color: #3a4a6d;">
-                                                        رمز عبور خود را فراموش کرده‌اید؟
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="text-center mt-3">
-                                                <p>صفحه ی ثبت نام <a href="{{ route('register') }}" style="color: #3a4a6d; font-weight: 600;">وارد شوید</a></p>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ...
-            </div>
+  <!-- محتوای اصلی -->
+  <div class="login-container">
+    <form class="login-form" id="loginForm">
+      <div class="login-header">
+        <h1>خوش آمدید</h1>
+        <p>لطفا اطلاعات حساب خود را وارد کنید</p>
+      </div>
+      
+      <div class="form-group">
+        <label for="email" class="form-label">ایمیل</label>
+        <input type="email" id="email" class="form-control" placeholder="example@gmail.com" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password" class="form-label">رمز عبور</label>
+        <div style="position: relative;">
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+          <i class="bi bi-eye password-toggle" id="togglePassword" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--gold-dark);"></i>
         </div>
-    </div>
-</div>
-                    
-@endsection
+      </div>
+      
+      <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center;">
+          <input type="checkbox" id="remember" style="margin-left: 8px;">
+          <label for="remember" style="font-size: 0.9rem; color: var(--text-light); cursor: pointer;">مرا به خاطر بسپار</label>
+        </div>
+        <a href="../forget/forget.html" class="text-decoration-none" style="font-size: 0.9rem;">رمز عبور خود را فراموش کرده اید؟</a>
+      </div>
+      
+      <button type="submit" class="btn-submit">
+        <i class="bi bi-box-arrow-in-right" style="margin-left: 8px;"></i>
+        ورود به حساب
+      </button>
+      
+      <div class="divider">یا</div>
+      
+      <button type="button" class="btn-google">
+        <span>ورود با Google</span>
+      </button>
+      
+      <div class="login-links">
+        <span style="color: var(--text-dark);">حساب کاربری ندارید؟</span>
+        <a href="../sign up/sign up.html" style="color:#3D2B1F;">ثبت نام کنید</a>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ asset('assets/js/Auth/login.js') }}"></script>
+    
+</body>
+</html>
