@@ -33,7 +33,7 @@ class VerificationCodeController extends Controller
         VerificationCode::create([
             'phone' => $phone,
             'code' => $code,
-            'expires_at' => Carbon::now()->addMinutes(5),
+            'expires_at' => Carbon::now()->addMinutes(2),
             'used' => false,
         ]);
         // فضا برای ارسال کد به مشتری
@@ -68,8 +68,24 @@ class VerificationCodeController extends Controller
         );
 
         Auth::login($user);
-
+        if($user->where('isAdmin',1)){
+            return redirect()->route('dashboard.admin');
+        }
         return redirect()->route('dashboard');
     }
-    public function resendCode() {}
+    public function resendCode(Request $request) {
+        
+        VerificationCode::where('phone',$request->phone)->delete();
+
+        $code = rand(100000,900000);
+
+        VerificationCode::create([
+            'phone' => $request->phone,
+            'code' => $code,
+            'expires_at' => Carbon::now()->addMinutes(2),
+            'used' => false,
+        ]);
+
+        return back()->with('success','موفقیت آمیز بود');
+    }
 }
