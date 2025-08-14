@@ -417,19 +417,23 @@
                         <tbody>
                             @foreach ($sliders as $slider )
                             <tr>
-                                <td><img src={{ asset('storage/' . $slider['image']) }} width="80" class="rounded" alt={{ $slider['image'] }}></td>
+                                <td><img src={{ asset('storage/' . $slider['image']) }} width="70"  class="rounded" alt={{ $slider['image'] }}></td>
                                 <td>{{ $slider['title'] }}</td>
                                 <td>{{ $slider['link'] }}</td>
                                 <td>{{ $slider['order'] }}</td>
                                 <td><span class="badge badge-success">{{ $slider['status'] }}</span></td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        <button class="gold-btn btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                    <a href="{{ route('slider.destroy', $slider['id']) }}">
+                                            <button class="gold-btn" style="padding: 4px 8px; font-size: 0.8rem;">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </a>
+                                        <a href="{{ route('slider.destroy',$slider['id']) }}">
+                                            <button class="btn btn-sm" style="background: rgba(220, 53, 69, 0.1); color: #DC3545; padding: 4px 8px; font-size: 0.8rem;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -444,7 +448,7 @@
                 <div class="card-header">
                     <h3 class="card-title"><i class="fas fa-plus-circle"></i> افزودن اسلاید جدید</h3>
                 </div>
-                <form action="{{ route('create.slider') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('slider.create') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
