@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SliderController extends Controller
 {
@@ -68,8 +69,14 @@ class SliderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Slider $slider)
     {
-        //
+        if($slider->image && Storage::disk('public')->exists($slider->image)){
+            Storage::disk('public')->delete($slider->image);
+        }
+
+        $slider->delete();
+
+        return redirect()->route('dashboard.admin')->with('success','اسلایدر با موفقیت حذف شد');
     }
 }
