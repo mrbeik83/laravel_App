@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\loginUser;
 use App\Http\Controllers\Auth\registerUser;
@@ -10,6 +11,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Models\Product;
+use App\Models\Slider;
 use App\Models\User;
 use Carbon\Carbon;
 use Faker\Guesser\Name;
@@ -17,6 +19,7 @@ use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 
 
 Route::get('/', [dashboardController::class, 'show'])->name('dashboard');
@@ -34,15 +37,15 @@ Route::middleware('guest')->group(function () {
     Route::get('google/login', [GoogleController::class, 'index'])->name('google.login');
     Route::get('google/callback', [GoogleController::class, 'callback']);
     //ورود با sms 
-    Route::get('/loginSms',[VerificationCodeController::class,'showForm'])->name('login.sms');
-    Route::post('sendCode',[VerificationCodeController::class, 'sendCode'])->name('send.code');
-    Route::post('verifyCode',[VerificationCodeController::class, 'verifyCode'])->name('verify.code');
-    Route::get('resendVerifyCode',[VerificationCodeController::class, 'resendCode'])->name('resend.code');
+    Route::get('/loginSms', [VerificationCodeController::class, 'showForm'])->name('login.sms');
+    Route::post('sendCode', [VerificationCodeController::class, 'sendCode'])->name('send.code');
+    Route::post('verifyCode', [VerificationCodeController::class, 'verifyCode'])->name('verify.code');
+    Route::post('resendVerifyCode', [VerificationCodeController::class, 'resendCode'])->name('resend.code');
 });
 
 //داشبورد و لاگ اوت داخل گروپ میدلور آث
 Route::middleware('auth')->group(function () {
-    
+
     Route::post('/logout', [loginUser::class, 'logout'])->name('logout');
 
     //سبد خرید
@@ -66,7 +69,7 @@ Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index
 
 //تست هرچیز جدیدی
 Route::get('/test', function () {
-    return view('auth.login-sms');
+    dd(Slider::get()->toArray());
 })->name('test');
 
 // نمایش محصولات 
@@ -75,18 +78,22 @@ Route::get('/list', [ProductController::class, 'index'])->name('product.list');
 // روت های قسمت مخصوص ادمین سایت
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     // روت های مخصوص ادمین
-    Route::group(['prefix' => 'admin'],function(){
-        Route::get('/dashboard',[AdminController::class,'index'])->name('dashboard.admin');
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard.admin');
+        Route::get('customers', [AdminController::class, 'showCustomers'])->name('admin.customers');
 
         // کرود محصولات
         Route::group(['prefix' => 'product'], function () {
 
-        Route::get('/create', [ProductController::class, 'create'])->name('create');
-        Route::post('/create', [ProductController::class, 'store'])->name('product.create');
-        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
-        Route::post('update/{id}', [ProductController::class, 'update'])->name('product.update');
-        Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+            Route::get('/create', [ProductController::class, 'create'])->name('create');
+            Route::post('/create', [ProductController::class, 'store'])->name('product.create');
+            Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
+            Route::post('update/{id}', [ProductController::class, 'update'])->name('product.update');
+            Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
+        });
+        //کرود اسلایدرز
+        Route::group(['prefix' => 'slider'],function(){
+            Route::post('create',[SliderController::class, 'store'])->name('create.slider');
+        });
     });
-    });
-
 });
