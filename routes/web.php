@@ -94,6 +94,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
         //کرود اسلایدرز
         Route::group(['prefix' => 'slider'],function(){
             Route::post('create',[SliderController::class, 'store'])->name('slider.create');
+            Route::get('editSlider/{slider}',[SliderController::class, 'edit'])->name('slider.edit');
             Route::get('deleteSlider/{slider}',[SliderController::class,'destroy'])->name('slider.destroy');
 
         });
