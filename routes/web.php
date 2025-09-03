@@ -84,9 +84,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
         // کرود محصولات
         Route::group(['prefix' => 'product'], function () {
-
-            Route::get('/create', [ProductController::class, 'create'])->name('create');
-            Route::post('/create', [ProductController::class, 'store'])->name('product.create');
+            // Route::resource('/',ProductController::class);
+            Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+            Route::post('/create', [ProductController::class, 'store'])->name('product.store');
             Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
             Route::post('update/{id}', [ProductController::class, 'update'])->name('product.update');
             Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
