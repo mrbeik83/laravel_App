@@ -69,7 +69,7 @@ Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index
 
 //تست هرچیز جدیدی
 Route::get('/test', function () {
-    dd(Slider::get()->toArray());
+    dd(User::whereDate('created_at',Carbon::today())->get());
 })->name('test');
 
 // نمایش محصولات 
