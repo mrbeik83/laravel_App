@@ -40,7 +40,7 @@
                 <div class="admin-user-info">
                     <div class="admin-user-avatar">ر</div>
                     <div>
-                        <h4 class="admin-user-name">روشا رحمانی</h4>
+                        <h4 class="admin-user-name">{{ auth()->user()->userName }}</h4>
                         <p class="admin-user-role">ادمین فروشگاه</p>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-scarf"></i>
                     </div>
-                    <div class="stat-value">۴۲</div>
+                    <div class="stat-value">{{ $productCount }}</div>
                     <div class="stat-label">تعداد محصولات</div>
                 </div>
                 <div class="stat-card">
@@ -85,7 +85,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <div class="stat-value">۱۲۴</div>
+                    <div class="stat-value">{{ $customerCount }}</div>
                     <div class="stat-label">مشتریان </div>
                 </div>
 
@@ -323,7 +323,7 @@
                     <div class="stat-icon">
                         <i class="fas fa-user-plus"></i>
                     </div>
-                    <div class="stat-value">۴۲</div>
+                    <div class="stat-value">{{ $customersToday }}</div>
                     <div class="stat-label">مشتریان جدید امروز</div>
                 </div>
                 <div class="stat-card">
