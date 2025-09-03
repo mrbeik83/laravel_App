@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پنل مدیریت | یونیک اسکارف</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
@@ -118,7 +118,7 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="admin-table">
+                    <table class="admin-table" id="productsTable">
                         <thead>
                             <tr>
                                 <th>تصویر</th>
@@ -188,7 +188,8 @@
             </div>
 
             <!-- فرم افزودن محصول -->
-            <form action="">
+            <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
                 <div class="admin-card" id="productForm" name="productForm" style="display: none;">
                     <div class="card-header">
                         <h3 class="card-title" name="card-title" id="card-title"><i class="fas fa-plus-circle"></i>
@@ -205,7 +206,7 @@
                                     </div>
                                     <p style="font-size: 0.8rem;">برای آپلود تصویر کلیک کنید یا فایل را اینجا رها کنید
                                     </p>
-                                    <input type="file" id="productImage" name="productImage" style="display: none;"
+                                    <input type="file" id="productImage" name="picture" style="display: none;"
                                         accept="image/*">
                                     <img id="imagePreview" class="image-preview">
                                 </div>
@@ -213,13 +214,13 @@
 
                             <div class="form-group">
                                 <label class="form-label">نام محصول</label>
-                                <input type="text" class="form-control" id="productName" name="productName"
+                                <input type="text" class="form-control" id="productName" name="name"
                                     placeholder="مثال: شال حریر طرح دار">
                             </div>
 
                             <div class="form-group ">
                                 <label class="form-label">دسته‌بندی</label>
-                                <select class="form-control" id="productCategory">
+                                <select name="type" class="form-control" id="productCategory">
                                     <option value="">انتخاب کنید</option>
                                     <option value="مقنعه">مقنعه</option>
                                     <option value="شال">شال</option>
@@ -230,7 +231,7 @@
 
                             <div class="form-group">
                                 <label class="form-label">کد محصول</label>
-                                <input type="text" class="form-control" id="productCode" name="productCode"
+                                <input type="text" class="form-control" id="productCode" name="product_code"
                                     placeholder="مثال: SH-2024">
                             </div>
                         </div>
@@ -238,19 +239,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-label">قیمت (تومان)</label>
-                                <input type="number" class="form-control" id="productPrice" name="productPrice"
+                                <input type="number" class="form-control" id="productPrice" name="price"
                                     placeholder="مثال: 290000">
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label">تعداد موجودی</label>
-                                <input type="number" class="form-control" id="productStock" name="productStock"
+                                <input type="number" class="form-control" id="productStock" name="number"
                                     placeholder="مثال: 15">
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label">سایز</label>
-                                <input type="text" class="form-control" id="productSize" name="productSize"
+                                <input type="text" class="form-control" id="productSize" name="size"
                                     placeholder="مثال: 60*60 سانتی‌متر">
                             </div>
 
@@ -265,13 +266,13 @@
                                     <button type="button" class="btn btn-gold " id="addColorBtn" name="addColorBtn"
                                         style="background-color: #a67b5b;">افزودن رنگ</button>
                                 </div>
-                                <input type="hidden" name="available_colors" id="availableColorsInput"
+                                <input type="hidden" name="colors" id="availableColorsInput"
                                     name="availableColorsInput">
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label">وضعیت</label>
-                                <select class="form-control" id="productStatus" name="productStatus">
+                                <select class="form-control" id="productStatus" name="status">
                                     <option value="موجود">موجود</option>
                                     <option value="ناموجود">ناموجود</option>
                                     <option value="به زودی">به زودی</option>
@@ -283,7 +284,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label class="form-label">توضیحات محصول</label>
-                                <textarea class="form-control" id="productDescription" name="productDescription"
+                                <textarea class="form-control" id="productDescription" name="description"
                                     rows="3" placeholder="توضیحات کامل درباره محصول..."></textarea>
                             </div>
 
@@ -417,14 +418,14 @@
                         <tbody>
                             @foreach ($sliders as $slider )
                             <tr>
-                                <td><img src={{ asset('storage/' . $slider['image']) }} width="70"  class="rounded" alt={{ $slider['image'] }}></td>
+                                <td><img src={{ asset('storage/' . $slider['image']) }} width="70" class="rounded" alt={{ $slider['image'] }}></td>
                                 <td>{{ $slider['title'] }}</td>
                                 <td>{{ $slider['link'] }}</td>
                                 <td>{{ $slider['order'] }}</td>
                                 <td><span class="badge badge-success">{{ $slider['status'] }}</span></td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                    <a href="{{ route('slider.destroy', $slider['id']) }}">
+                                        <a href="{{ route('slider.edit', $slider['id']) }}">
                                             <button class="gold-btn" style="padding: 4px 8px; font-size: 0.8rem;">
                                                 <i class="fas fa-edit"></i>
                                             </button>
@@ -461,7 +462,7 @@
                                     <p>برای آپلود تصویر کلیک کنید</p>
                                     <input name="image" type="file" accept="image/*">
                                     @error('image')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
@@ -470,7 +471,7 @@
                                 <label class="form-label">عنوان اسلاید</label>
                                 <input type="text" name="title" class="form-control" placeholder="مثال: تخفیف ویژه بهاری">
                                 @error('title')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
@@ -480,7 +481,7 @@
                                 <label class="form-label">لینک هدف</label>
                                 <input type="text" name="link" class="form-control" placeholder="مثال: /discount">
                                 @error('link')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -488,7 +489,7 @@
                                 <label class="form-label">ترتیب نمایش</label>
                                 <input type="number" name="order" class="form-control" value="1">
                                 @error('order')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -499,7 +500,7 @@
                                     <option value="inactive">غیرفعال</option>
                                 </select>
                                 @error('status')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>

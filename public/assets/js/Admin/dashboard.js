@@ -222,68 +222,68 @@
             }
 
             // ذخیره محصول جدید
-            const saveProductBtn = document.querySelector('#productForm button[type="submit"]');
-            if (saveProductBtn) {
-                saveProductBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    addNewProduct();
-                });
-            }
+            // const saveProductBtn = document.querySelector('#productForm button[type="submit"]');
+            // if (saveProductBtn) {
+            //     saveProductBtn.addEventListener('click', function (e) {
+            //         e.preventDefault();
+            //         addNewProduct();
+            //     });
+            // }
 
             // اضافه کردن محصول جدید به جدول
             function addNewProduct() {
-                const name = document.getElementById('productName').value;
-                const category = document.getElementById('productCategory').value;
-                const code = document.getElementById('productCode').value;
-                const price = document.getElementById('productPrice').value;
-                const stock = document.getElementById('productStock').value;
-                const status = document.getElementById('productStatus').value;
-                const imageSrc = imagePreview ? imagePreview.src : './images/default-product.webp';
-                const colors = JSON.parse(availableColorsInput.value || '[]');
+                // const name = document.getElementById('productName').value;
+                // const category = document.getElementById('productCategory').value;
+                // const code = document.getElementById('productCode').value;
+                // const price = document.getElementById('productPrice').value;
+                // const stock = document.getElementById('productStock').value;
+                // const status = document.getElementById('productStatus').value;
+                // const imageSrc = imagePreview ? imagePreview.src : './images/default-product.webp';
+                // const colors = JSON.parse(availableColorsInput.value || '[]');
 
-                if (!name || !category || !code || !price || !stock) {
-                    alert('لطفا تمام فیلدهای ضروری را پر کنید');
-                    return;
-                }
+                // if (!name || !category || !code || !price || !stock) {
+                //     alert('لطفا تمام فیلدهای ضروری را پر کنید');
+                //     return;
+                // }
 
-                const tbody = document.querySelector('.admin-table tbody');
-                const newRow = document.createElement('tr');
+                // const tbody = document.querySelector('.admin-table tbody');
+                // const newRow = document.createElement('tr');
 
                 // تعیین رنگ badge بر اساس دسته‌بندی
-                let badgeClass = getBadgeClass(category);
+        //         let badgeClass = getBadgeClass(category);
 
 
 
-                newRow.innerHTML = `
-            <td><img src="${imageSrc}" width="40" class="rounded"></td>
-            <td>${name}</td>
-            <td><span class="badge ${badgeClass}">${category}</span></td>
-            <td>${code}</td>
-            <td>${Number(price).toLocaleString('fa-IR')} تومان</td>
-            <td>${stock} عدد</td>
+        //         newRow.innerHTML = `
+        //     <td><img src="${imageSrc}" width="40" class="rounded"></td>
+        //     <td>${name}</td>
+        //     <td><span class="badge ${badgeClass}">${category}</span></td>
+        //     <td>${code}</td>
+        //     <td>${Number(price).toLocaleString('fa-IR')} تومان</td>
+        //     <td>${stock} عدد</td>
             
-            <td>
-                <div class="d-flex gap-2">
-                    <button class="gold-btn edit-btn" style="padding: 4px 8px; font-size: 0.8rem;">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn btn-sm delete-btn" style="background: rgba(220, 53, 69, 0.1); color: #DC3545;">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        `;
+        //     <td>
+        //         <div class="d-flex gap-2">
+        //             <button class="gold-btn edit-btn" style="padding: 4px 8px; font-size: 0.8rem;">
+        //                 <i class="fas fa-edit"></i>
+        //             </button>
+        //             <button class="btn btn-sm delete-btn" style="background: rgba(220, 53, 69, 0.1); color: #DC3545;">
+        //                 <i class="fas fa-trash"></i>
+        //             </button>
+        //         </div>
+        //     </td>
+        // `;
 
-                tbody.insertBefore(newRow, tbody.firstChild);
+                // tbody.insertBefore(newRow, tbody.firstChild);
 
                 // اضافه کردن event listener برای دکمه‌های جدید
-                newRow.querySelector('.edit-btn').addEventListener('click', function () {
-                    editProduct(newRow);
-                });
+                // newRow.querySelector('.edit-btn').addEventListener('click', function () {
+                //     editProduct(newRow);
+                // });
 
-                newRow.querySelector('.delete-btn').addEventListener('click', function () {
-                    deleteProduct(newRow);
-                });
+                // newRow.querySelector('.delete-btn').addEventListener('click', function () {
+                //     deleteProduct(newRow);
+                // });
 
                 // پنهان کردن فرم و ریست کردن آن
                 if (productForm) {
