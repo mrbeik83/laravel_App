@@ -10,6 +10,7 @@ use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Jobs\firstJob;
 use App\Models\Product;
 use App\Models\Slider;
 use App\Models\User;
@@ -69,7 +70,8 @@ Route::get('/orders', [dashboardController::class, 'index'])->name('orders.index
 
 //تست هرچیز جدیدی
 Route::get('/test', function () {
-    dd(User::whereDate('created_at',Carbon::today())->get());
+    firstJob::dispatch()->delay(10);
+    dd('ok');
 })->name('test');
 
 // نمایش محصولات 
