@@ -9,6 +9,7 @@
         "php": "^8.2",
         "doctrine/dbal": "^4.3",
         "laravel/framework": "^11.31",
+        "laravel/installer": "^5.18",
         "laravel/socialite": "*",
         "laravel/tinker": "^2.9",
         "morilog/jalali": "^3.4"
